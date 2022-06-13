@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/register.css";
-
-const Register = () => {
+import { connect } from "react-redux";
+import setAlert from "../action/alert";
+import Alert from "./Alert";
+const Register = (props) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,7 +19,7 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log("Enter Correct Password");
+      props.setAlert("Incorrect Password", "danger");
     } else {
       //   console.log(formData);
       //   const newUser = {
@@ -42,6 +44,7 @@ const Register = () => {
   };
   return (
     <Fragment>
+      <Alert />
       <form className='form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-group'>
           <input
@@ -99,4 +102,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default connect(null, { setAlert })(Register);
