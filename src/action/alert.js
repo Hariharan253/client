@@ -1,7 +1,7 @@
 import { SET_ALERT, REMOVE_ALERT } from "./types";
 import { v4 as uuid } from "uuid";
-const setAlert = (msg, alertType) => (dispatch) => {
-  const id = uuid;
+const setAlert = (msg, alertType, id) => (dispatch) => {
+  // const id = 1;
   console.log("setAlert is Entered");
   dispatch({
     type: SET_ALERT,

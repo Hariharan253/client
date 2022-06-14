@@ -12,14 +12,16 @@ const Register = (props) => {
     password2: "",
   });
   const { name, email, password, password2 } = formData;
-
+  const [id, setId] = useState(0);
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      props.setAlert("Incorrect Password", "danger");
+      props.setAlert("Incorrect Password", "danger", id);
+      setId(id + 1);
+      console.log("alerts ", props);
     } else {
       //   console.log(formData);
       //   const newUser = {
@@ -102,4 +104,10 @@ const Register = (props) => {
   );
 };
 
-export default connect(null, { setAlert })(Register);
+function mapStateToProps(state) {
+  return {
+    alerts: state.alert,
+  };
+}
+
+export default connect(mapStateToProps, { setAlert })(Register);
