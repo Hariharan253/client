@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import "../styles/register.css";
 import { connect } from "react-redux";
 import setAlert from "../action/alert";
-import register from "../action/auth";
+import { register } from "../action/auth";
 import Alert from "./Alert";
 const Register = (props) => {
   const [formData, setFormData] = useState({
@@ -16,7 +16,6 @@ const Register = (props) => {
   const [id, setId] = useState(0);
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
@@ -46,6 +45,10 @@ const Register = (props) => {
       //   );
       //   console.log(res);
       console.log("User Created");
+    }
+    if (props.auth.isAuthenticated) {
+      console.log("isAuthenticated");
+      <Navigate to='dashboard' />;
     }
   };
   return (
