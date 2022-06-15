@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/register.css";
 import { connect } from "react-redux";
 import setAlert from "../action/alert";
+import register from "../action/auth";
 import Alert from "./Alert";
 const Register = (props) => {
   const [formData, setFormData] = useState({
@@ -23,6 +24,9 @@ const Register = (props) => {
       setId(id + 1);
       console.log("alerts ", props);
     } else {
+      props.register({ name, email, password });
+      setTimeout(() => console.log("Alerts ", props), 4000);
+
       //   console.log(formData);
       //   const newUser = {
       //     name,
@@ -107,7 +111,8 @@ const Register = (props) => {
 function mapStateToProps(state) {
   return {
     alerts: state.alert,
+    auth: state.auth,
   };
 }
 
-export default connect(mapStateToProps, { setAlert })(Register);
+export default connect(mapStateToProps, { setAlert, register })(Register);

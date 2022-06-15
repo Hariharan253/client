@@ -5,7 +5,7 @@ const Alert = ({ alert }) =>
   alert.length > 0 &&
   alert.map((alerts) => {
     return (
-      <div>
+      <div key={alert.id}>
         <h1>{alerts.msg}</h1>
       </div>
     );
