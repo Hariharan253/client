@@ -18,7 +18,7 @@ const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
-
+  console.log("rerendering");
   return (
     <Provider store={store}>
       <Fragment>

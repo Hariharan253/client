@@ -3,6 +3,9 @@ import {
   REGISTER_SUCCESS,
   USER_LOADED,
   AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT,
 } from "./types";
 import setAlert from "./alert";
 import setAuthToken from "../utils/setAuthToken";
@@ -26,12 +29,6 @@ export const loadUser = () => async (dispatch) => {
 export const register =
   ({ name, email, password }) =>
   async (dispatch) => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
-    };
-
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -42,30 +39,45 @@ export const register =
         data,
         config
       );
-      // const j = await res.json();
-      // console.log("Status ", res.status);
-      // console.log(j);
-
-      // console.log(j);
       const d = dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
+      dispatch(loadUser());
       console.log(d);
-      //else {
-      //   const errors = j;
-      //   console.log("err-1 ", errors.error[0]);
-      //   if (errors) {
-      //     errors.error.forEach((error) =>
-      //       dispatch(setAlert(error.msg, "danger", 5))
-      //     );
-      //   }
+    } catch (err) {
+      const errors = err.response.data.error;
+      console.log("err-1 ", errors);
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, "danger", 5)));
+      }
+      const d = dispatch({
+        type: REGISTER_FAILURE,
+      });
+      console.log("Err ", d);
+    }
+  };
 
-      //   const d = dispatch({
-      //     type: REGISTER_FAILURE,
-      //   });
-      //   console.log("REGISTER_FAILURE ", d);
-      // }
+export const login =
+  ({ email, password }) =>
+  async (dispatch) => {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+    const data = JSON.stringify({ email, password });
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/auth",
+        data,
+        config
+      );
+      console.log(res.data);
+      const d = dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+      dispatch(loadUser());
+      console.log(d);
     } catch (err) {
       const errors = err.response.data.error;
       console.log("err-1 ", errors);
@@ -74,8 +86,13 @@ export const register =
       }
 
       const d = dispatch({
-        type: REGISTER_FAILURE,
+        type: LOGIN_FAIL,
       });
       console.log("Err ", d);
     }
   };
+
+export const logout = () => (dispatch) => {
+  console.log("Entered logout");
+  dispatch({ type: LOGOUT });
+};

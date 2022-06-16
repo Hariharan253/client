@@ -46,13 +46,16 @@ const Register = (props) => {
       //   console.log(res);
       console.log("User Created");
     }
-    if (props.auth.isAuthenticated) {
-      console.log("isAuthenticated");
-      <Navigate to='dashboard' />;
-    }
+    // if (props.auth.  ) {
+    //   console.log("isAuthenticated");
+    //   <Navigate to='dashboard' />;
+    // }
   };
   return (
     <Fragment>
+      {props.auth.isAuthenticated === true && (
+        <Navigate to='/dashboard' replace={true} />
+      )}
       <Alert />
       <form className='form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-group'>

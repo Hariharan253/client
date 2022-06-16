@@ -1,11 +1,14 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink, Navigate } from "react-router-dom";
 import "../styles/register.css";
+import { login } from "../action/auth";
+import { connect } from "react-redux";
+import Alert from "./Alert";
 
-const Login = () => {
+const Login = (props) => {
   const [formData, setFormData] = useState({
     email: "",
-    password2: "",
+    password: "",
   });
   const { email, password } = formData;
 
@@ -14,10 +17,20 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    props.login({ email, password });
     console.log("User Logged In");
   };
+
+  // if (props.auth.isAuthenticated === true) {
+  //   console.log("Entered ISAUTHENTICATED");
+  //   return <Navigate to='/dashboard' replace={true} />;
+  // }
   return (
     <Fragment>
+      {props.auth.isAuthenticated === true && (
+        <Navigate to='/dashboard' replace={true} />
+      )}
+      <Alert />
       <form className='form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-group'>
           <input
@@ -54,4 +67,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
+export default connect(mapStateToProps, { login })(Login);

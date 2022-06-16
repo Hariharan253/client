@@ -2,36 +2,51 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/navbar.css";
 import { Outlet } from "react-router-dom";
-const Navbar = (props = null) => {
+import { connect } from "react-redux";
+import { logout } from "../../action/auth";
+
+const Navbar = (props) => {
+  const guestLinks = (
+    <div className='navbar-links'>
+      <p>
+        <Link to='/developers'>developers</Link>
+      </p>
+      {"     "}
+      <p>
+        <Link to='/register'>Register</Link>
+      </p>
+      {"    "}
+      <p>
+        <Link to='/login'>LogIn</Link>
+      </p>
+      {"      "}
+    </div>
+  );
+  const authLinks = (
+    <div>
+      <a onClick={logout()}>LogOut</a>
+    </div>
+  );
+  const { loading, isAuthenticated } = props.auth;
   return (
     <Fragment>
       <div className='navbar'>
         <Link to='/'>
           <h1>Navbar</h1>
         </Link>
-        <div className='navbar-links'>
-          <p>
-            <Link to='/developers'>developers</Link>
-          </p>
-          {"     "}
-          <p>
-            {props !== null ? (
-              <Link to='/register'>Register</Link>
-            ) : (
-              <Link to='/my-profile'>My Profile</Link>
-            )}
-          </p>
-          {"    "}
-          <p>
-            <Link to='/login'>LogIn</Link>
-          </p>
-          {"      "}
-          <p>{props === null && <Link to='/job-a'>Avalaible jobs</Link>}</p>
-        </div>
+        {!loading && (
+          <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+        )}
       </div>
       <Outlet />
     </Fragment>
   );
 };
 
-export default Navbar;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
+export default connect(mapStateToProps, { logout })(Navbar);
