@@ -92,7 +92,7 @@ export const login =
     }
   };
 
-export const logout = () => (dispatch) => {
+export const logOut = () => (dispatch) => {
   console.log("Entered logout");
   dispatch({ type: LOGOUT });
 };

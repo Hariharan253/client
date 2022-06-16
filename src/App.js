@@ -9,6 +9,9 @@ import { Provider } from "react-redux";
 import store from "./store";
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./action/auth";
+import Dashboard from "./components/dashboard/Dashboard";
+import PrivateRoute from "./components/routing/PrivateRoute";
+import Landing from "./components/layout/Landing";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -22,18 +25,15 @@ const App = () => {
   return (
     <Provider store={store}>
       <Fragment>
+        <Navbar />
         <Routes>
-          <Route path='/' element={<Navbar />}>
-            <Route path='/developers' element={<Developers />} />
-          </Route>
-
-          <Route path='/' element={<Navbar />}>
-            <Route path='/register' element={<Register />} />
-          </Route>
-
-          <Route path='/' element={<Navbar />}>
-            <Route path='/login' element={<Login />} />
-          </Route>
+          <Route index element={<Landing />} />
+          <Route exact path='/developers' element={<Developers />} />
+          <Route exact path='/register' element={<Register />} />
+          <Route exact path='/login' element={<Login />} />
+          {/* <PrivateRoute exact path='/dashboard' component={Dashboard} /> */}
+          {/* <Route path='/' element={<Navbar />}> */}
+          {/* </Route> */}
         </Routes>
       </Fragment>
     </Provider>

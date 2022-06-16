@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import "../../styles/navbar.css";
 import { Outlet } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout } from "../../action/auth";
+import { logOut } from "../../action/auth";
+
+// export const logout = () => (dispatch) => {
+//   console.log("Entered logout");
+//   dispatch({ type: LOGOUT });
+// };
 
 const Navbar = (props) => {
   const guestLinks = (
@@ -24,7 +29,7 @@ const Navbar = (props) => {
   );
   const authLinks = (
     <div>
-      <a onClick={logout()}>LogOut</a>
+      <a onClick={props.logOut}>LogOut</a>
     </div>
   );
   const { loading, isAuthenticated } = props.auth;
@@ -38,7 +43,7 @@ const Navbar = (props) => {
           <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
         )}
       </div>
-      <Outlet />
+      {/* <Outlet /> */}
     </Fragment>
   );
 };
@@ -49,4 +54,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logOut })(Navbar);
