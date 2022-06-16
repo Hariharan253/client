@@ -10,7 +10,7 @@ import store from "./store";
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./action/auth";
 import Dashboard from "./components/dashboard/Dashboard";
-import PrivateRoute from "./components/routing/PrivateRoute";
+import ProtectedRoute from "./components/routing/ProtectedRoute";
 import Landing from "./components/layout/Landing";
 
 if (localStorage.token) {
@@ -31,6 +31,15 @@ const App = () => {
           <Route exact path='/developers' element={<Developers />} />
           <Route exact path='/register' element={<Register />} />
           <Route exact path='/login' element={<Login />} />
+          <Route
+            path='/dashboard'
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          {/* <PrivateRoute component={Dashboard} /> */}
           {/* <PrivateRoute exact path='/dashboard' component={Dashboard} /> */}
           {/* <Route path='/' element={<Navbar />}> */}
           {/* </Route> */}
