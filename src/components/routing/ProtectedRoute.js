@@ -4,17 +4,14 @@ import { Route, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Dashboard from "../dashboard/Dashboard";
 
-const ProtectedRoute = ({
-  //   component: Component,
-  auth: { isAuthenticated, loading },
-  children,
-}) => {
-  if (isAuthenticated === false && loading === false) {
-    console.log("Entered Login");
+const ProtectedRoute = (props) => {
+  if (props.auth.isAuthenticated === false && props.auth.loading === false) {
+    //&& propsloading === false) {
+    // console.log("Entered Login");
     return <Navigate to='/login' replace={true} />;
   }
-  console.log("Entered Login");
-  return <Dashboard />;
+  // console.log("Entered Login");
+  return <props.component />;
 };
 //  => (
 //   <Route
@@ -28,9 +25,9 @@ const ProtectedRoute = ({
 //   />
 // );
 
-ProtectedRoute.propTypes = {
-  auth: PropTypes.object.isRequired,
-};
+// ProtectedRoute.propTypes = {
+//   auth: PropTypes.object.isRequired,
+// };
 
 function mapStateToProps(state) {
   return {
@@ -38,4 +35,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ProtectedRoute);
+export default connect(mapStateToProps, null)(ProtectedRoute);
