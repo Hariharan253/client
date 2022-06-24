@@ -1,10 +1,14 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { createProfile } from "../../action/profile";
+import { createProfile, getCurrentProfile } from "../../action/profile";
 import Alert from "../../auth/Alert";
-const CreateProfile = ({ createProfile, alert }) => {
+const EditProfile = ({
+  createProfile,
+  alert,
+  profile: { profile, loading },
+}) => {
   const [formData, setFormData] = useState({
     company: "",
     website: "",
@@ -46,13 +50,31 @@ const CreateProfile = ({ createProfile, alert }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const history = 1;
-    const res = await createProfile(formData);
+    const res = await createProfile(formData, true);
     console.log("res:", res);
     if (res === undefined) {
-      console.log("Have To Navigate");
+      console.log("Have To Navigate to Dashboard");
       navigate("/dashboard");
     }
   };
+  useEffect(() => {
+    getCurrentProfile();
+    setFormData({
+      company: loading || !profile.company ? "" : profile.company,
+      website: loading || !profile.website ? "" : profile.website,
+      location: loading || !profile.location ? "" : profile.location,
+      status: loading || !profile.status ? "" : profile.status,
+      skills: loading || !profile.skills ? "" : profile.skills.join(","),
+      githubusername:
+        loading || !profile.githubusername ? "" : profile.githubusername,
+      bio: loading || !profile.bio ? "" : profile.bio,
+      twitter: loading || !profile.twitter ? "" : profile.twitter,
+      facebook: loading || !profile.facebook ? "" : profile.facebook,
+      linkedin: loading || !profile.linkedin ? "" : profile.linkedin,
+      youtube: loading || !profile.youtube ? "" : profile.youtube,
+      instagram: loading || !profile.instagram ? "" : profile.instagram,
+    });
+  }, [loading]);
 
   return (
     <Fragment>
@@ -226,15 +248,17 @@ const CreateProfile = ({ createProfile, alert }) => {
   );
 };
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
   alert: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
     alert: state.alert,
+    profile: state.profile,
   };
 };
 
-export default connect(mapStateToProps, { createProfile })(CreateProfile);
+export default connect(mapStateToProps, { createProfile })(EditProfile);

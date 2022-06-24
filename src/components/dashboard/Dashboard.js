@@ -48,31 +48,41 @@ const Dashboard = ({
                 {auth.user !== null && <h5>UserName: {auth.user.name}</h5>}
               </div>
             </div>
-            <div className='row justify-content-center mt-4'>
-              <div className='col col-lg-12 '>
-                {profile !== null ? (
-                  <Fragment>
+            {profile !== null ? (
+              <Fragment>
+                <div className='row justify-content-center mt-4'>
+                  <div className='col col-lg-12'>
                     <Link to='/edit-profile'>
                       <button className='btn btn-sm btn-warning margin-right'>
                         Edit Profile
                       </button>
                     </Link>
+                    <button className='btn btn-sm btn-success margin-right'>
+                      Add Experience
+                    </button>
+                    <button className='btn btn-sm btn-success margin-right'>
+                      Add Education
+                    </button>
+                  </div>
+                </div>
+                <div className='row justify-content-center mt-4'>
+                  <div className='col col-lg-12 '>
                     <button
-                      className='btn btn-sm btn-danger'
+                      className='btn btn-sm btn-danger margin-right'
                       onClick={() => onClick()}
                     >
                       Delete Profile
                     </button>
-                  </Fragment>
-                ) : (
-                  <Link to='/create-profile'>
-                    <button className='btn btn-sm btn-success'>
-                      Create Profile
-                    </button>
-                  </Link>
-                )}
-              </div>
-            </div>
+                  </div>
+                </div>
+              </Fragment>
+            ) : (
+              <Link to='/create-profile'>
+                <button className='btn btn-sm btn-success'>
+                  Create Profile
+                </button>
+              </Link>
+            )}
           </div>
         </Fragment>
       )}
