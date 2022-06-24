@@ -46,9 +46,11 @@ export default function (state = initialState, action) {
       console.log("Entered REGISTER_FAILURE");
       return {
         ...state,
+        profile: null,
         token: null,
         isAuthenticated: false,
         loading: false,
+        user: null,
       };
     default:
       return state;

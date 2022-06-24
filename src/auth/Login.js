@@ -31,38 +31,44 @@ const Login = (props) => {
         <Navigate to='/dashboard' replace={true} />
       )}
       <Alert />
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
-        <div className='form-group'>
-          <input
-            type='email'
-            placeholder='Enter Email'
-            name='email'
-            value={email}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
+      <div className='container'>
+        <div className='row justify-row-center'>
+          <div className='col-xs-1 text-center'>
+            <form className='form' onSubmit={(e) => onSubmit(e)}>
+              <div className='form-group'>
+                <input
+                  type='email'
+                  placeholder='Enter Email'
+                  name='email'
+                  value={email}
+                  onChange={(e) => onChange(e)}
+                  required
+                />
+              </div>
 
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Enter Password'
-            name='password'
-            value={password}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
+              <div className='form-group'>
+                <input
+                  type='password'
+                  placeholder='Enter Password'
+                  name='password'
+                  value={password}
+                  onChange={(e) => onChange(e)}
+                  required
+                />
+              </div>
 
-        <div className='form-group'>
-          <button type='submit' className='btn btn-sm btn-primary'>
-            Submit
-          </button>
-          <p>
-            Don't Have an Account? <Link to='/register'>Sign Up</Link>
-          </p>
+              <div className='form-group'>
+                <button type='submit' className='btn btn-sm btn-primary'>
+                  Submit
+                </button>
+                <p>
+                  Don't Have an Account? <Link to='/register'>Sign Up</Link>
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
+      </div>
     </Fragment>
   );
 };

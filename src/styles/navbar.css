@@ -2,8 +2,10 @@
     display: flex;
     justify-content: space-between;
 }
-
+a{
+    text-decoration: none;
+}
 .navbar-links{
     display:flex;
-    gap: 2rem   ;
+    gap: 2rem;
 }

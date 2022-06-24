@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  CLEAR_PROFILE,
 } from "./types";
 import setAlert from "./alert";
 import setAuthToken from "../utils/setAuthToken";
@@ -71,7 +72,7 @@ export const login =
         data,
         config
       );
-      console.log(res.data);
+      console.log("login Data: ", res.data);
       const d = dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -95,4 +96,5 @@ export const login =
 export const logOut = () => (dispatch) => {
   console.log("Entered logout");
   dispatch({ type: LOGOUT });
+  dispatch({ type: CLEAR_PROFILE });
 };

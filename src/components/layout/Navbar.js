@@ -28,21 +28,35 @@ const Navbar = (props) => {
     </div>
   );
   const authLinks = (
-    <div>
-      <a onClick={props.logOut}>LogOut</a>
-    </div>
+    <Fragment>
+      <div className='navbar-links'>
+        <div>
+          <Link to='/profile'>Profile</Link>
+        </div>
+        <div>
+          <a onClick={props.logOut}>LogOut</a>
+        </div>
+      </div>
+    </Fragment>
   );
   const { loading, isAuthenticated } = props.auth;
   return (
     <Fragment>
-      <div className='navbar'>
-        <Link to='/'>
-          <h1>Navbar</h1>
-        </Link>
-        {!loading && (
-          <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-        )}
+      <div className='container'>
+        <div className='row justify-content-center'>
+          <div className='col col-lg-12 col-sm-12 col-md-12'>
+            <div className='navbar'>
+              <Link to='/dashboard'>
+                <h1>Navbar</h1>
+              </Link>
+              {!loading && (
+                <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
+
       {/* <Outlet /> */}
     </Fragment>
   );

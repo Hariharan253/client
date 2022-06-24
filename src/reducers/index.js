@@ -1,7 +1,11 @@
 import { combineReducers } from "redux";
 import alert from "./alert";
 import auth from "./auth";
-export default combineReducers({
+import profile from "./profile";
+const rootReducer = combineReducers({
   alert,
   auth,
+  profile,
 });
+
+export default rootReducer;

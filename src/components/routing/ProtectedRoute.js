@@ -5,12 +5,16 @@ import { connect } from "react-redux";
 import Dashboard from "../dashboard/Dashboard";
 
 const ProtectedRoute = (props) => {
-  if (props.auth.isAuthenticated === false && props.auth.loading === false) {
+  if (
+    props.auth.isAuthenticated === false &&
+    props.auth.loading === false &&
+    props.auth.token === null
+  ) {
     //&& propsloading === false) {
     // console.log("Entered Login");
     return <Navigate to='/login' replace={true} />;
   }
-  // console.log("Entered Login");
+  console.log("Entered Dashboard");
   return <props.component />;
 };
 //  => (

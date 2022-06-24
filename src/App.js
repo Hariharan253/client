@@ -5,40 +5,57 @@ import Navbar from "./components/layout/Navbar";
 import Developers from "./components/layout/Developer";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
-import { Provider } from "react-redux";
+//import { Provider } from "react-redux";
 import store from "./store";
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./action/auth";
 import Dashboard from "./components/dashboard/Dashboard";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import Landing from "./components/layout/Landing";
+import Profile from "./components/profile/Profile";
+import EditProfile from "./components/profile/EditProfile";
+import CreateProfile from "./components/profile/CreateProfile";
+import "bootstrap/dist/css/bootstrap.css";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-const App = () => {
+const App = (props) => {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
   console.log("rerendering");
   return (
-    <Provider store={store}>
-      <Fragment>
-        <Navbar />
-        <Routes>
-          <Route index element={<Landing />} />
-          <Route exact path='/developers' element={<Developers />} />
-          <Route exact path='/register' element={<Register />} />
-          <Route exact path='/login' element={<Login />} />
-          <Route path='/dashboard' element={<ProtectedRoute component={Dashboard}/>} />
-          {/* <PrivateRoute component={Dashboard} /> */}
-          {/* <PrivateRoute exact path='/dashboard' component={Dashboard} /> */}
-          {/* <Route path='/' element={<Navbar />}> */}
-          {/* </Route> */}
-        </Routes>
-      </Fragment>
-    </Provider>
+    <Fragment>
+      <Navbar />
+      <Routes>
+        <Route index element={<Landing />} />
+        <Route exact path='/developers' element={<Developers />} />
+        <Route exact path='/register' element={<Register />} />
+        <Route exact path='/login' element={<Login />} />
+        <Route
+          path='/dashboard'
+          element={<ProtectedRoute component={Dashboard} />}
+        />
+        <Route
+          path='/profile'
+          element={<ProtectedRoute component={Profile} />}
+        />
+        <Route
+          path='/edit-profile'
+          element={<ProtectedRoute component={EditProfile} />}
+        />
+        <Route
+          path='/create-profile'
+          element={<ProtectedRoute component={CreateProfile} />}
+        />
+        {/* <PrivateRoute component={Dashboard} /> */}
+        {/* <PrivateRoute exact path='/dashboard' component={Dashboard} /> */}
+        {/* <Route path='/' element={<Navbar />}> */}
+        {/* </Route> */}
+      </Routes>
+    </Fragment>
   );
 };
 

@@ -23,6 +23,7 @@ const Register = (props) => {
       setId(id + 1);
       console.log("alerts ", props);
     } else {
+      console.log("name: ", name);
       props.register({ name, email, password });
       setTimeout(() => console.log("Alerts ", props), 4000);
 
@@ -56,60 +57,68 @@ const Register = (props) => {
       {props.auth.isAuthenticated === true && (
         <Navigate to='/dashboard' replace={true} />
       )}
-      <Alert />
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
-        <div className='form-group'>
-          <input
-            type='name'
-            placeholder='Enter Name'
-            name='name'
-            value={name}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
+      <div className='container'>
+        <div className='row justify-content-center'>
+          <div className='col-lg-6 text-center mb-5'>
+            <Alert />
+          </div>
+          <div className='col-lg-6 text-center'>
+            <form className='form' onSubmit={(e) => onSubmit(e)}>
+              <div className='form-group'>
+                <input
+                  type='name'
+                  placeholder='Enter Name'
+                  name='name'
+                  value={name}
+                  onChange={(e) => onChange(e)}
+                  required
+                />
+              </div>
 
-        <div className='form-group'>
-          <input
-            type='email'
-            placeholder='Enter Email'
-            name='email'
-            value={email}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
+              <div className='form-group'>
+                <input
+                  type='email'
+                  placeholder='Enter Email'
+                  name='email'
+                  value={email}
+                  onChange={(e) => onChange(e)}
+                  required
+                />
+              </div>
 
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Enter Password'
-            name='password'
-            value={password}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
+              <div className='form-group'>
+                <input
+                  type='password'
+                  placeholder='Enter Password'
+                  name='password'
+                  value={password}
+                  onChange={(e) => onChange(e)}
+                  required
+                />
+              </div>
 
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Check Password'
-            name='password2'
-            value={password2}
-            onChange={(e) => onChange(e)}
-            required
-          />
+              <div className='form-group'>
+                <input
+                  type='password'
+                  placeholder='Check Password'
+                  name='password2'
+                  value={password2}
+                  onChange={(e) => onChange(e)}
+                  required
+                />
+              </div>
+              <div className='form-group'>
+                <button type='submit' className='btn btn-sm btn-primary'>
+                  Submit
+                </button>
+                <p>
+                  Have an Account? <Link to='/login'>login</Link>
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className='form-group'>
-          <button type='submit' className='btn btn-sm btn-primary'>
-            Submit
-          </button>
-          <p>
-            Have an Account? <Link to='/login'>login</Link>
-          </p>
-        </div>
-      </form>
+      </div>
     </Fragment>
   );
 };
