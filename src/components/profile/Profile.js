@@ -83,6 +83,20 @@ const Profile = (props) => {
               <div className='profile-body text-secondary'>{onSocial()}</div>
             </div>
           </div>
+          {profile.education.length > 0 && (
+            <div className='col col-md-6 col-sm-12 col-lg-4 text-center mt-3'>
+              <Link to='/view-education'>
+                <div className='profile rounded'>
+                  <p className='profile-heading text-center text-warning'>
+                    Education
+                  </p>
+                  <div className='profile-body text-secondary'>
+                    <h3>View Education</h3>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          )}
         </div>
         <div className='row mt-4 mb-5'>
           <div className='text-center col col-lg-12 col-md-12 col-sm-12'>

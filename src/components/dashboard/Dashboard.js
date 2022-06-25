@@ -31,7 +31,13 @@ const Dashboard = ({
         <Spinner />
       ) : (
         <Fragment>
-          <Alert />
+          <div className='container'>
+            <div className='row'>
+              <div className='col col-lg-12 col-md-12 bg-success text-warning'>
+                <Alert />
+              </div>
+            </div>
+          </div>
           <div className='container'>
             <div className='row justify-content-center'>
               <div className='col col-lg-12 text-center'>

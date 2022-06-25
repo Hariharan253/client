@@ -1,9 +1,10 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import "../../styles/profile.css";
-const AddEducation = ({ alert, profile }) => {
+import { Link, useNavigate } from "react-router-dom";
+import "../../../styles/profile.css";
+import { addEducation } from "../../../action/profile";
+const AddEducation = ({ alert, profile, addEducation }) => {
   const [formData, setFormData] = useState({
     school: "",
     degree: "",
@@ -13,16 +14,23 @@ const AddEducation = ({ alert, profile }) => {
     current: "",
     description: "",
   });
+  const navigate = useNavigate();
   const { school, degree, fieldofstudy, from, to, current, description } =
     formData;
-
+  console.log("educationFormData:", formData);
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const [toDateDisabled, toggleDisabled] = useState(false);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
+    console.log("Education Form Submitted");
     e.preventDefault();
+    const res = await addEducation(formData);
+    //console.log("Education res:", res);
+    if (res === undefined) {
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -128,10 +136,11 @@ const AddEducation = ({ alert, profile }) => {
                       onChange={(e) => onChange(e)}
                     />
                   </div>
-                  <div className='mt-3 mb-4'>
+                  <div className='mt-3 mb-4 form-group'>
                     <button
                       type='submit'
                       className='btn btn-sm btn-primary margin-right'
+                      onClick={(e) => onSubmit(e)}
                     >
                       Submit
                     </button>
@@ -159,9 +168,9 @@ const mapStateToProps = (state) => {
 };
 
 AddEducation.propTypes = {
-  createProfile: PropTypes.func.isRequired,
   alert: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
+  addEducation: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(AddEducation);
+export default connect(mapStateToProps, { addEducation })(AddEducation);

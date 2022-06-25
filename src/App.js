@@ -16,7 +16,8 @@ import Profile from "./components/profile/Profile";
 import EditProfile from "./components/profile/EditProfile";
 import CreateProfile from "./components/profile/CreateProfile";
 import "bootstrap/dist/css/bootstrap.css";
-import AddEducation from "./components/profile/AddEducation";
+import AddEducation from "./components/profile/education/AddEducation";
+import ViewEducation from "./components/profile/education/ViewEducation";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -54,6 +55,10 @@ const App = (props) => {
         <Route
           path='/add-education'
           element={<ProtectedRoute component={AddEducation} />}
+        />
+        <Route
+          path='/view-education'
+          element={<ProtectedRoute component={ViewEducation} />}
         />
         {/* <PrivateRoute component={Dashboard} /> */}
         {/* <PrivateRoute exact path='/dashboard' component={Dashboard} /> */}
