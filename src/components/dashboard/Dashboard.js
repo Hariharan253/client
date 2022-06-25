@@ -60,9 +60,11 @@ const Dashboard = ({
                     <button className='btn btn-sm btn-success margin-right'>
                       Add Experience
                     </button>
-                    <button className='btn btn-sm btn-success margin-right'>
-                      Add Education
-                    </button>
+                    <Link to='/add-education'>
+                      <button className='btn btn-sm btn-success margin-right'>
+                        Add Education
+                      </button>
+                    </Link>
                   </div>
                 </div>
                 <div className='row justify-content-center mt-4'>

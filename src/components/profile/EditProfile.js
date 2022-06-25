@@ -68,23 +68,28 @@ const EditProfile = ({
       githubusername:
         loading || !profile.githubusername ? "" : profile.githubusername,
       bio: loading || !profile.bio ? "" : profile.bio,
-      twitter: loading || !profile.twitter ? "" : profile.twitter,
-      facebook: loading || !profile.facebook ? "" : profile.facebook,
-      linkedin: loading || !profile.linkedin ? "" : profile.linkedin,
-      youtube: loading || !profile.youtube ? "" : profile.youtube,
-      instagram: loading || !profile.instagram ? "" : profile.instagram,
+      twitter: loading || !profile.social.twitter ? "" : profile.social.twitter,
+      facebook:
+        loading || !profile.social.facebook ? "" : profile.social.facebook,
+      linkedin:
+        loading || !profile.social.linkedin ? "" : profile.social.linkedin,
+      youtube: loading || !profile.social.youtube ? "" : profile.social.youtube,
+      instagram:
+        loading || !profile.social.instagram ? "" : profile.social.instagram,
     });
-  }, [loading]);
+  }, []);
 
   return (
     <Fragment>
-      <Alert />
       <h3 className='large text-primary text-center'>Create Your Profile</h3>
       <p className='lead mt-4'>
         <i className='fas fa-user'></i>
         Let's Get Your Informsation to form your profile
       </p>
       <small>* = Required Field</small>
+      <div className='mt-3 mb-3'>
+        <Alert />
+      </div>
       <form className='form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-group'>
           <select name='status' onChange={(e) => onChange(e)} value={status}>
