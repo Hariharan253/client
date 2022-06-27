@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import auth from "../../../reducers/auth";
 import { PropTypes } from "prop-types";
@@ -8,20 +8,30 @@ import { deleteEducation } from "../../../action/profile";
 import Alert from "../../../auth/Alert";
 import axios from "axios";
 import { UPDATE_PROFILE } from "../../../action/types";
-const ViewEducation = ({ profile: { profile, loading }, deleteEducation }) => {
-  console.log(profile);
+import EditEducation from "./EditEducation";
+import { editEducationWithId } from "../../../action/edit";
+
+const ViewEducation = ({
+  profile: { profile, loading },
+  deleteEducation,
+  auth,
+  editEducationWithId,
+}) => {
   const navigate = useNavigate();
+  console.log(profile);
   const onClickDelete = async (e, id) => {
     // e.persist();
     console.log("edu:", e, id);
     const res = await deleteEducation(id);
 
     console.log(res);
-    //console.log("DEL RES:", res);
-    if (res === undefined) {
-      //   navigate("/dashboard");
-    }
   };
+  const onClickEdit = (id) => {
+    console.log("Entered OnCLick Edit ID:", id);
+    editEducationWithId(id);
+    navigate("/edit-education");
+  };
+
   useEffect(() => {}, [loading]);
 
   return (
@@ -44,10 +54,12 @@ const ViewEducation = ({ profile: { profile, loading }, deleteEducation }) => {
                           ID: {edu._id}
                         </div>
                         <div className='profile-body text-secondary text-center mt-2'>
-                          <button className='btn btn-sm btn-warning margin-right'>
+                          <button
+                            className='btn btn-sm btn-warning margin-right'
+                            onClick={() => onClickEdit(index)}
+                          >
                             Edit
                           </button>
-
                           <button
                             className='btn btn-sm btn-danger'
                             onClick={(e) => onClickDelete(e, edu._id)}
@@ -78,14 +90,20 @@ const ViewEducation = ({ profile: { profile, loading }, deleteEducation }) => {
 };
 
 ViewEducation.propTypes = {
+  auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   deleteEducation: PropTypes.func.isRequired,
+  editEducationWithId: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return {
+    auth: state.auth,
     profile: state.profile,
   };
 };
 
-export default connect(mapStateToProps, { deleteEducation })(ViewEducation);
+export default connect(mapStateToProps, {
+  deleteEducation,
+  editEducationWithId,
+})(ViewEducation);

@@ -4,6 +4,7 @@ import {
   GET_PROFILE,
   PROFILE_ERROR,
   UPDATE_PROFILE,
+  REMOVE_EDUCATION,
 } from "./types";
 import setAlert from "./alert";
 import { useNavigate } from "react-router-dom";
@@ -111,6 +112,47 @@ export const addEducation = (formData) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(setAlert("Education Added"));
+    // return res;
+  } catch (err) {
+    const errors = err.response.data.errors;
+    console.log("err-1 ", errors);
+    if (errors) {
+      errors.forEach((error, index) =>
+        dispatch(setAlert(error.msg, "danger", index))
+      );
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    return errors;
+  }
+};
+
+export const addEducationWithId = (edu_id, formData) => async (dispatch) => {
+  try {
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    console.log("formData:", formData);
+
+    const res = await axios.put(
+      `http://localhost:5000/api/profile/education/${edu_id}`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    });
+    dispatch({
+      type: REMOVE_EDUCATION,
+    });
+    dispatch(setAlert(`Education Edited for id: ${edu_id}`));
     // return res;
   } catch (err) {
     const errors = err.response.data.errors;
