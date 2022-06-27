@@ -1,4 +1,9 @@
-import { EDIT_EDUCATION, REMOVE_EDUCATION } from "../action/types";
+import {
+  EDIT_EDUCATION,
+  EDIT_EXPERIENCE,
+  REMOVE_EDUCATION,
+  REMOVE_EXPERIENCE,
+} from "../action/types";
 
 const initialState = {
   educationId: null,
@@ -17,6 +22,16 @@ const edit = (state = initialState, action) => {
       return {
         ...state,
         educationId: null,
+      };
+    case EDIT_EXPERIENCE:
+      return {
+        ...state,
+        experienceId: payload.id,
+      };
+    case REMOVE_EXPERIENCE:
+      return {
+        ...state,
+        educationId: payload.id,
       };
     default:
       return state;

@@ -182,3 +182,102 @@ export const deleteEducation = (id) => async (dispatch) => {
   dispatch(setAlert(`Education Deleted`));
   return res;
 };
+
+export const addExperience = (formData) => async (dispatch) => {
+  try {
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.put(
+      "http://localhost:5000/api/profile/experience",
+      formData,
+      config
+    );
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    });
+
+    dispatch(setAlert("Experience Added"));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    console.log("err-1 ", errors);
+    if (errors) {
+      errors.forEach((error, index) =>
+        dispatch(setAlert(error.msg, "danger", index))
+      );
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    return errors;
+  }
+};
+
+export const addExperienceWithId = (exp_id, formData) => async (dispatch) => {
+  try {
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.put(
+      `http://localhost:5000/api/profile/experience/${exp_id}`,
+      formData,
+      config
+    );
+    console.log("RES:", res);
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    });
+
+    dispatch(setAlert("Experience Edited"));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    console.log("err-1 ", errors);
+    if (errors) {
+      errors.forEach((error, index) =>
+        dispatch(setAlert(error.msg, "danger", index))
+      );
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    return errors;
+  }
+};
+
+export const deleteExperience = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(
+      `http://localhost:5000/api/profile/experience/${id}`
+    );
+    console.log("DELTED EXP DATA:", res.data);
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    });
+    dispatch(setAlert(`Experience Deleted`));
+  } catch (err) {
+    const errors = err.response.data.errors;
+    console.log("err-1 ", errors);
+    if (errors) {
+      errors.forEach((error, index) =>
+        dispatch(setAlert(error.msg, "danger", index))
+      );
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    return errors;
+  }
+};

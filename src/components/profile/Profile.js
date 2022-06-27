@@ -97,6 +97,20 @@ const Profile = (props) => {
               </Link>
             </div>
           )}
+          {profile.experience.length > 0 && (
+            <div className='col col-md-6 col-sm-12 col-lg-4 text-center mt-3'>
+              <Link to='/view-experience'>
+                <div className='profile rounded'>
+                  <p className='profile-heading text-center text-warning'>
+                    Experience
+                  </p>
+                  <div className='profile-body text-secondary'>
+                    <h3>View Experience</h3>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          )}
         </div>
         <div className='row mt-4 mb-5'>
           <div className='text-center col col-lg-12 col-md-12 col-sm-12'>

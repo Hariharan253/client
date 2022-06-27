@@ -165,6 +165,7 @@ const EditEducation = ({
                       rows='5'
                       cols='100'
                       placeholder='Description'
+                      name='description'
                       value={description}
                       onChange={(e) => onChange(e)}
                     />

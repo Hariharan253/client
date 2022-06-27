@@ -1,36 +1,57 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
-import "../../../styles/profile.css";
-import { addEducation } from "../../../action/profile";
-const AddEducation = ({ alert, profile, addEducation }) => {
+// import { addExperienceWithId } from "../../../action/profile";
+import { addExperienceWithId } from "../../../action/profile";
+import { connect } from "react-redux";
+const EditExperience = ({
+  profile: { profile, loading },
+  addExperienceWithId,
+  edit: { experienceId },
+}) => {
   const [formData, setFormData] = useState({
-    school: "",
-    degree: "",
-    fieldofstudy: "",
+    title: "",
+    company: "",
+    location: "",
     from: "",
     to: "",
     current: "",
     description: "",
   });
   const navigate = useNavigate();
-  const { school, degree, fieldofstudy, from, to, current, description } =
-    formData;
+  const { title, company, location, from, to, current, description } = formData;
   console.log("educationFormData:", formData);
+  const experience = profile.experience[experienceId];
+  useEffect(() => {
+    setFormData({
+      title: loading || !experience.title ? "" : experience.title,
+      company: loading || !experience.company ? "" : experience.company,
+      location: loading || !experience.location ? "" : experience.location,
+      current: loading || !experience.current ? "" : experience.current,
+      from: loading || !experience.from ? "" : experience.from,
+      to: loading || !experience.to ? "" : experience.to,
+      description:
+        loading || !experience.description ? "" : experience.description,
+    });
+  }, [loading]);
+
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const [toDateDisabled, toggleDisabled] = useState(false);
 
   const onSubmit = async (e) => {
-    console.log("Education Form Submitted");
+    console.log("Experience Form Submitted:", experience._id);
     e.preventDefault();
-    const res = await addEducation(formData);
-    //console.log("Education res:", res);
+    const res = await addExperienceWithId(experience._id, formData);
+    console.log("res:", res);
     if (res === undefined) {
-      navigate("/dashboard");
+      navigate("/view-experience");
     }
+    //const res = await addEducation(formData);
+    //console.log("Education res:", res);
+    //     if (res === undefined) {
+    //       navigate("/dashboard");
+    //     }
   };
 
   return (
@@ -38,11 +59,11 @@ const AddEducation = ({ alert, profile, addEducation }) => {
       <div className='container'>
         <div className='row'>
           <div className='col col-md-12 col-lg-12 col-sm-12 text-center'>
-            <h1 className='text-danger'>Add Education</h1>
+            <h1 className='text-danger'>Add Experience</h1>
           </div>
 
           <div className='col col-md-12 col-lg-12 col-sm-12 mt-4'>
-            <h5 className='text-dark'>Tell Us About Your Education</h5>
+            <h5 className='text-dark'>Tell Us About Your Experience</h5>
             <h6 className='text-dark'>* = Required</h6>
           </div>
           <div className='col col-md-12 col-lg-12 col-sm-12 mt-4'>
@@ -54,9 +75,9 @@ const AddEducation = ({ alert, profile, addEducation }) => {
                       style={{ height: "30px" }}
                       type='text'
                       className='form-width'
-                      placeholder='* School or BootCamp'
-                      name='school'
-                      value={school}
+                      placeholder='* Title of the Work Experience'
+                      name='title'
+                      value={title}
                       onChange={(e) => onChange(e)}
                       required={true}
                     />
@@ -66,9 +87,9 @@ const AddEducation = ({ alert, profile, addEducation }) => {
                       style={{ height: "30px" }}
                       className='form-width'
                       type='text'
-                      placeholder='* Degree or Certificate'
-                      name='degree'
-                      value={degree}
+                      placeholder='* Company Name'
+                      name='company'
+                      value={company}
                       onChange={(e) => onChange(e)}
                       required={true}
                     />
@@ -78,9 +99,9 @@ const AddEducation = ({ alert, profile, addEducation }) => {
                       style={{ height: "30px" }}
                       className='form-width'
                       type='text'
-                      placeholder='* Field Of Study'
-                      name='fieldofstudy'
-                      value={fieldofstudy}
+                      placeholder='Location'
+                      name='location'
+                      value={location}
                       onChange={(e) => onChange(e)}
                       required={true}
                     />
@@ -106,8 +127,8 @@ const AddEducation = ({ alert, profile, addEducation }) => {
                     <input
                       style={{ height: "30px" }}
                       className='form-width'
-                      type='date'
-                      placeholder='* From'
+                      type='input'
+                      placeholder=' yyyy-mm-dd'
                       name='from'
                       value={from}
                       onChange={(e) => onChange(e)}
@@ -118,9 +139,9 @@ const AddEducation = ({ alert, profile, addEducation }) => {
                     <h6 className='text-dark'>To</h6>
                     <input
                       style={{ height: "30px" }}
-                      type='date'
+                      type='input'
                       className='form-width'
-                      placeholder='* To'
+                      placeholder=' yyyy-mm-dd'
                       name='to'
                       value={to}
                       onChange={(e) => onChange(e)}
@@ -145,7 +166,7 @@ const AddEducation = ({ alert, profile, addEducation }) => {
                     >
                       Submit
                     </button>
-                    <Link to='/dashboard'>
+                    <Link to='/view-experience'>
                       <button className='btn btn-sm btn-warning'>
                         Go Back
                       </button>
@@ -163,15 +184,11 @@ const AddEducation = ({ alert, profile, addEducation }) => {
 
 const mapStateToProps = (state) => {
   return {
-    alert: state.alert,
     profile: state.profile,
+    edit: state.edit,
   };
 };
 
-AddEducation.propTypes = {
-  alert: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
-  addEducation: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, { addEducation })(AddEducation);
+export default connect(mapStateToProps, { addExperienceWithId })(
+  EditExperience
+);

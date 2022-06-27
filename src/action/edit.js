@@ -1,4 +1,4 @@
-import { EDIT_EDUCATION } from "./types";
+import { EDIT_EDUCATION, EDIT_EXPERIENCE } from "./types";
 
 export const editEducationWithId = (id) => (dispatch) => {
   const res = dispatch({
@@ -8,4 +8,12 @@ export const editEducationWithId = (id) => (dispatch) => {
     },
   });
   console.log(res);
+};
+export const editExperienceWithId = (id) => (dispatch) => {
+  dispatch({
+    type: EDIT_EXPERIENCE,
+    payload: {
+      id,
+    },
+  });
 };

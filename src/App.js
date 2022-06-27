@@ -19,6 +19,9 @@ import "bootstrap/dist/css/bootstrap.css";
 import AddEducation from "./components/profile/education/AddEducation";
 import ViewEducation from "./components/profile/education/ViewEducation";
 import EditEducation from "./components/profile/education/EditEducation";
+import AddExperience from "./components/profile/experience/AddExperience";
+import ViewExperience from "./components/profile/experience/ViewExperience";
+import EditExperience from "./components/profile/experience/EditExperience";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -65,10 +68,19 @@ const App = (props) => {
           path='/edit-education'
           element={<ProtectedRoute component={EditEducation} />}
         />
-        {/* <PrivateRoute component={Dashboard} /> */}
-        {/* <PrivateRoute exact path='/dashboard' component={Dashboard} /> */}
-        {/* <Route path='/' element={<Navbar />}> */}
-        {/* </Route> */}
+
+        <Route
+          path='/add-experience'
+          element={<ProtectedRoute component={AddExperience} />}
+        />
+        <Route
+          path='/view-experience'
+          element={<ProtectedRoute component={ViewExperience} />}
+        />
+        <Route
+          path='/edit-experience'
+          element={<ProtectedRoute component={EditExperience} />}
+        />
       </Routes>
     </Fragment>
   );
