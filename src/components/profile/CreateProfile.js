@@ -211,6 +211,7 @@ const CreateProfile = ({ createProfile, alert }) => {
             </div>
           </Fragment>
         )}
+
         <div className='form-group'>
           <button type='submit' className='btn btn-success btn-sm margin-right'>
             Submit

@@ -63,11 +63,11 @@ const Dashboard = ({
                         Edit Profile
                       </button>
                     </Link>
-                    <Link to="/add-experience">
 
-                    <button className='btn btn-sm btn-success margin-right'>
-                      Add Experience
-                    </button>
+                    <Link to='/add-experience'>
+                      <button className='btn btn-sm btn-success margin-right'>
+                        Add Experience
+                      </button>
                     </Link>
                     <Link to='/add-education'>
                       <button className='btn btn-sm btn-success margin-right'>

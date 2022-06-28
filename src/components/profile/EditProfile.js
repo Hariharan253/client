@@ -238,6 +238,7 @@ const EditProfile = ({
             </div>
           </Fragment>
         )}
+
         <div className='form-group'>
           <button type='submit' className='btn btn-success btn-sm margin-right'>
             Submit
