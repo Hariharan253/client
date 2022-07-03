@@ -70,6 +70,7 @@ export const registerCustomer = (formData) => async (dispatch) => {
 };
 
 export const loginCustomer = (formData) => async (dispatch) => {
+  console.log("formData:", formData);
   try {
     const config = {
       headers: {
@@ -82,7 +83,7 @@ export const loginCustomer = (formData) => async (dispatch) => {
       formData,
       config
     );
-
+    console.log("Res:", res); //
     dispatch({
       type: LOGIN_CUSTOMER_SUCCESS,
       payload: res.data, //Passing the auth token
@@ -91,17 +92,18 @@ export const loginCustomer = (formData) => async (dispatch) => {
     dispatch(loadCustomer()); //Load customer Data for later use
     return res;
   } catch (err) {
-    const errors = err.response.data.errors;
-    console.log("err-1 ", errors);
-    if (errors) {
-      errors.forEach((error, index) =>
-        dispatch(setAlert(error.msg, "danger", index))
-      );
-    }
+    // const errors = err.response.data.errors;
+    // console.log("err-1 ", errors);
+    // if (errors) {
+    //   errors.forEach((error, index) =>
+    //     dispatch(setAlert(error.msg, "danger", index))
+    //   );
+    // }
     // dispatch({
     //   type: PROFILE_ERROR,
     //   payload: { msg: err.response.statusText, status: err.response.status },
     // });
-    return errors;
+    //return errors;
+    return err;
   }
 };

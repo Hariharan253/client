@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { loginCustomer } from "../../action/customer/customer-auth/customerAuth";
 import { connect } from "react-redux";
 import Alert from "../Alert";
-const CustomerLogin = ({ alert, loginCustomer }) => {
+const CustomerLogin = ({ alert, loginCustomer, auth }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -16,6 +16,7 @@ const CustomerLogin = ({ alert, loginCustomer }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    //console.log("auth:", auth);
     const res = await loginCustomer(formData);
     console.log("Res Login:", res);
   };
@@ -59,6 +60,7 @@ const CustomerLogin = ({ alert, loginCustomer }) => {
 const mapStateToProps = (state) => {
   return {
     alert: state.alert,
+    auth: state.auth,
   };
 };
 

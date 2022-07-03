@@ -1,7 +1,11 @@
 import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
-
-const CreateJob = () => {
+import { Link, useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
+import {
+  disableNavigation,
+  enableNavigation,
+} from "../../../action/customer/navigationPage/navigationPage";
+const CreateJob = ({ enableNavigation, disableNavigation }) => {
   const [formData, setFormData] = useState({
     school: "",
     degree: "",
@@ -28,6 +32,18 @@ const CreateJob = () => {
     //   navigate("/dashboard");
     // }
   };
+  const navigate = useNavigate();
+  const onClickAddEducation = () => {
+    enableNavigation("create-job");
+    navigate("/add-job-education"); //education required for the job
+    // disableNavigation();
+  };
+
+  const onClickAddExperience = () => {
+    enableNavigation("create-job");
+    navigate("/add-job-experience"); //expriences required for the job
+    // disableNavigation();
+  };
 
   return (
     <Fragment>
@@ -36,10 +52,25 @@ const CreateJob = () => {
           <div className='col col-md-12 col-lg-12 col-sm-12 text-center'>
             <h1 className='text-danger'>Add Job</h1>
           </div>
-
           <div className='col col-md-12 col-lg-12 col-sm-12 mt-4'>
             <h5 className='text-dark'>Tell Us About Your Education</h5>
             <h6 className='text-dark'>* = Required</h6>
+          </div>
+          <div className='col col-lg-12 col-md-12 col-sm-12'>
+            <button
+              className='btn btn-success btn-sm'
+              onClick={() => onClickAddEducation()}
+            >
+              Add the required Education
+            </button>
+          </div>
+          <div className='col col-lg-12 col-md-12 col-sm-12'>
+            <button
+              className='btn btn-success btn-sm mt-3'
+              onClick={() => onClickAddExperience()}
+            >
+              Add the required Experience
+            </button>
           </div>
           <div className='col col-md-12 col-lg-12 col-sm-12 mt-4'>
             <div className='row'>
@@ -157,4 +188,6 @@ const CreateJob = () => {
   );
 };
 
-export default CreateJob;
+export default connect(null, { enableNavigation, disableNavigation })(
+  CreateJob
+);

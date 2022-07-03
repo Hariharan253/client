@@ -24,6 +24,8 @@ import ViewExperience from "./components/profile/experience/ViewExperience";
 import EditExperience from "./components/profile/experience/EditExperience";
 import CreateJob from "./components/customer/jobs/CreateJob";
 import JobList from "./components/customer/jobs/JobList";
+import AddEducationJob from "./components/customer/jobs/education/AddEducationJob";
+import AddExperienceJob from "./components/customer/jobs/experience/AddExperienceJob";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -89,6 +91,14 @@ const App = (props) => {
         <Route
           path='/my-job-lists'
           element={<ProtectedRoute component={JobList} />}
+        />
+        <Route
+          path='/add-job-education'
+          element={<ProtectedRoute component={AddEducationJob} />}
+        />
+        <Route
+          path='/add-job-experience'
+          element={<ProtectedRoute component={AddExperienceJob} />}
         />
       </Routes>
     </Fragment>
